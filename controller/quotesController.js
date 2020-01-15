@@ -1,57 +1,56 @@
-let quotes = [
-  {
-    id: 1,
-    name: "alice",
-    quotes: "abcdefghijklmnopqrstvwxyz"
-  },
-  {
-    id: 2,
-    name: "bek",
-    quotes: "abcdefghijklmnopqrstvwxyz"
-  },
-  {
-    id: 3,
-    name: "chris",
-    quotes: "abcdefghijklmnopqrstvwxyz"
-  }
-];
+import Quote from "../models/Quote";
 
-export const getQuotes = (res, req) => {
-  return req.json(quotes);
+export const getQuotes = async (req, res) => {
+  try {
+    const quotes = await Quote.find({});
+    return res.json(quotes);
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
 };
 
-export const getQuote = (res, req) => {
+export const getQuote = async (req, res) => {
   const {
     params: { id }
   } = req;
   if (!id) {
     return res.status(400).json({ error: "Incorrect ID" });
   }
-  const quote = quotes.filter(quote => quote.id === id)[0];
-  if (!quote) {
-    return res.status(400).json({ error: "Unknown ID" });
+  try {
+    const quote = await Quote.findById(id);
+    return res.json(quote);
+  } catch (error) {
+    return res.status(400).json({ error });
   }
-  return res.json(quote);
 };
 
-export const createQuote = (res, req) => {
+export const createQuote = async (req, res) => {
+  console.log(req.body);
   const {
     body: { title, quote }
   } = req;
   if (!title.length || !quote.length) {
     res.status(400).json({ error: "Incorrect title or quote" });
   }
-  const newQuote = {
-    id: 4,
+  const newQuote = await Quote.create({
     title,
     quote
-  };
-  quotes.push(newQuote);
-  return res.json(newQuote);
+  });
+  return res.status(200).json(newQuote);
 };
 
-export const deleteQuote = (res, req) => {
+export const deleteQuote = async (req, res) => {
   const {
     params: { id }
   } = req;
+  try {
+    const quote = await Quote.findById(id);
+    if (quote) {
+      await Quote.findOneAndRemove({ _id: id });
+    } else {
+      throw Error();
+    }
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
 };

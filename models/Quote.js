@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
 
 const QuoteSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: "ID is required"
-  },
   title: {
     type: String,
-    required: "Title is required"
+    required: true
   },
   quote: {
     type: String,
-    required: "Quote is required"
+    required: true
   },
   views: {
     type: Number,
