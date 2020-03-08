@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import quotesRouter from "./router/quotesRouter";
+import recordsRouter from "./router/recordRouter";
 import morgan from "morgan";
 import path from "path";
 
@@ -18,5 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.use("/quotes", quotesRouter);
+app.use("/records", recordsRouter);
 
 app.listen(PORT, () => console.log(`✅  Listening on port ${PORT}`));
