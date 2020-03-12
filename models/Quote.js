@@ -12,10 +12,6 @@ const QuoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  views: {
-    type: Number,
-    default: 0
-  },
   createdAt: {
     type: Date,
     default: Date.now

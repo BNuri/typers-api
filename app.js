@@ -6,7 +6,7 @@ import helmet from "helmet";
 import quotesRouter from "./router/quotesRouter";
 import recordsRouter from "./router/recordRouter";
 import morgan from "morgan";
-import path from "path";
+import cors from "cors";
 
 dotenv.config();
 
@@ -17,6 +17,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(cors());
 
 app.use("/quotes", quotesRouter);
 app.use("/records", recordsRouter);
