@@ -9,7 +9,7 @@ const QuoteSchema = new mongoose.Schema({
     type: String
   },
   quote: {
-    type: String,
+    type: Array,
     required: true
   },
   createdAt: {
