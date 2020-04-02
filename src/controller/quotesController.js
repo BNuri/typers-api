@@ -53,12 +53,19 @@ export const createQuote = async (req, res) => {
     return resultArr;
   };
 
+  const replaceQuotation = string => {
+    return string.replace(/“|”/gi, '"');
+  };
+
   const splitQuote = quote => {
     const RE = /(\r\n|\n|\r)/gm;
     let quoteArr = quote.split(RE);
-    quoteArr = quoteArr.filter(quote => !quote.match(RE));
+    quoteArr = quoteArr
+      .filter(quote => !quote.match(RE))
+      .filter(quote => !(quote === ""));
     let resultArr = [];
     quoteArr.forEach(q => {
+      q = replaceQuotation(q);
       if (q.length > 40) {
         resultArr.push(...splitByLength(q));
       } else {
