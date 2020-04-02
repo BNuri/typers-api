@@ -77,8 +77,11 @@ export const createQuote = async (req, res) => {
   };
 
   const quoteArr = splitQuote(quote);
-  quoteArr.unshift(title, writer);
-
+  if (writer) {
+    quoteArr.unshift(title, writer);
+  } else {
+    quoteArr.unshift(title);
+  }
   const newQuote = await Quote.create({
     title,
     writer,
