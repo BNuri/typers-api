@@ -1,3 +1,4 @@
+import "./awsParameterConfig";
 import bodyParser from "body-parser";
 import "./db";
 import dotenv from "dotenv";
