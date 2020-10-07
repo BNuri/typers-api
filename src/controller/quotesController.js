@@ -53,6 +53,8 @@ export const createQuote = async (req, res) => {
     return resultArr;
   };
 
+  const removeSpace = string => string.replace( /(^\s*)|(\s*$)/g, "");
+
   const replaceQuotation = string => {
     return string.replace(/“|”/gi, '"');
   };
@@ -65,7 +67,7 @@ export const createQuote = async (req, res) => {
       .filter(quote => !(quote === ""));
     let resultArr = [];
     quoteArr.forEach(q => {
-      q = replaceQuotation(q);
+      q = removeSpace(replaceQuotation(q));
       if (q.length > 40) {
         resultArr.push(...splitByLength(q));
       } else {
